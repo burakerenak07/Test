@@ -25,3 +25,8 @@ def doBackgroundTask(inp):
     print("Doing background task")
     print(inp.msg)
     print("Done")
+
+driver = createDriver()
+page_source = getGoogleHomepage(driver)
+print(page_source)
+driver.quit()
