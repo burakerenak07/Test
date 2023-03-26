@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+import time
 
 def createDriver() -> webdriver.Chrome:
     chrome_options = webdriver.ChromeOptions()
@@ -26,7 +27,8 @@ def doBackgroundTask(inp):
     print(inp.msg)
     print("Done")
 
-driver = createDriver()
-page_source = getGoogleHomepage(driver)
-print(page_source)
-driver.quit()
+# driver = createDriver()
+# page_source = getGoogleHomepage(driver)
+# # print(page_source)
+# # time.sleep(10)
+# driver.quit()
