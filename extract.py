@@ -5,6 +5,7 @@ import time
 
 def createDriver() -> webdriver.Chrome:
     chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("----disable-gpu")
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
@@ -27,8 +28,8 @@ def doBackgroundTask(inp):
     print(inp.msg)
     print("Done")
 
-# driver = createDriver()
-# page_source = getGoogleHomepage(driver)
-# # print(page_source)
-# # time.sleep(10)
-# driver.quit()
+driver = createDriver()
+page_source = getGoogleHomepage(driver)
+print(page_source)
+time.sleep(10)
+driver.quit()
