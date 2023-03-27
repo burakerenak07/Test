@@ -28,8 +28,8 @@ def doBackgroundTask(inp):
     print(inp.msg)
     print("Done")
 
-driver = createDriver()
-page_source = getGoogleHomepage(driver)
-print(page_source)
-time.sleep(10)
-driver.quit()
+# driver = createDriver()
+# page_source = getGoogleHomepage(driver)
+# print(page_source)
+# time.sleep(10)
+# driver.quit()
