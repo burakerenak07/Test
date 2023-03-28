@@ -1,26 +1,47 @@
-from fastapi import FastAPI, BackgroundTasks, HTTPException,Path
+from fastapi import FastAPI, BackgroundTasks, HTTPException, Form, Request
 from pydantic import BaseModel
-from extract import getIt
+from extract import getIt,createDriver,ChromeDriverManager,getGoogleHomepage,doBackgroundTask
 from typing import Optional, List
-from typing import Optional
-from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from langdetect import detect
-
+import os
 app = FastAPI()
-inventory={}
+inventory = {}
 
 class Item(BaseModel):
     myLink: str
+SECRET = os.getenv("SECRET")
+
+#
+app = FastAPI()
+
+class Msg(BaseModel):
+    msg: str
+    secret: str
+
+@app.get("/")
+
+async def root():
+    return {"message": "Hello World. Welcome to FastAPI!"}
 
 
+@app.get("/homepage")
+async def demo_get():
+    driver=createDriver()
+
+    homepage = getGoogleHomepage(driver)
+    driver.close()
+    return homepage
+
+@app.post("/backgroundDemo")
+async def demo_post(inp: Msg, background_tasks: BackgroundTasks):
+    
+    background_tasks.add_task(doBackgroundTask, inp)
+    return {"message": "Success, background task started"}
 @app.post("/process_link")
 async def process_link(link: str = Form(...)):
-    exec=getIt(link)
-    inventory[0]=exec
+    exec_result = getIt(link)
+    inventory[0] = exec_result
     return inventory[0]
 
 @app.get("/", response_class=HTMLResponse)
@@ -36,6 +57,5 @@ async def show_form(request: Request):
                     <button type="submit">Process link</button>
                 </form>
             </body>
-        </html>
-    """
- 
+        </html>
+    """
